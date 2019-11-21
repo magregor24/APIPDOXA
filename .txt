@@ -1,0 +1,13 @@
+sql que me trae toda la informacion que necesito
+
+
+SELECT docentes.nombres,proyectos.nombre,proyectos.lapso_academico,Seccion_nombre,Materia_nombre,Aula_nombre,Dia_nombre,Hora_inicio,Hora_fin
+
+FROM v_resumen
+INNER JOIN proyectos
+ON v_resumen.Proyecto_id = proyectos.id
+INNER JOIN docentes_seccions
+ON v_resumen.Seccion_id = docentes_seccions.seccion_id
+INNER JOIN docentes
+ON docentes_seccions.docente_id = docentes.id
+WHERE docentes.id = 111 && proyectos.lapso_academico = '2014-1'
