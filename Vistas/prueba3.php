@@ -1,7 +1,7 @@
 <?php
 
-
 include 'Json/apiGetDocentesId.php';
+
 
 $docentes = new apiGetDocentesId();
 

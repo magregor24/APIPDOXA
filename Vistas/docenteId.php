@@ -8,14 +8,15 @@ $docentes = new apiGetDocentesId();
 if (isset($_GET['url'])) {
 
 	$ro = explode('/' , filter_var(rtrim($_GET['url'],'/'), FILTER_SANITIZE_URL ));
-	$docentes->getDocentesId($ro[1]);	
 
-}else{
+	if (!isset($ro[1])) {
+		
+		echo json_encode(array('mensaje' => 'Parametro {id} no definido'));
 
-	echo json_encode(array('mensaje' => 'Parametro (id) no definido'));
+	}else{
+		$docentes->getDocentesId($ro[1]);
+	}
 }
-
-
 
 
 ?>

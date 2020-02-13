@@ -1,6 +1,8 @@
 <?php
+
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
+
 include 'Modelos/modelo.php';
 
 class apiGetDocentesId {
@@ -18,15 +20,19 @@ class apiGetDocentesId {
 			foreach ($res as $key ) {
 				
 				$item = array('idDocente'       => $key['idDocente'],
+							  'cedula'          => $key['cedula'],
 							  'nombre'   		=> $key['nombreDocente'],
 							  'apellido' 		=> $key['apellidoDocente'],
+							  'telefono' 		=> $key['telefono'],
+							  'email' 			=> $key['email'],
 							  'seccion'         => $key['seccion'],
 							  'materia'         => $key['materia'],
 							  'lapsoAcademico'  => $key['lapsoAcademico'],
 							  'nombreAula'  	=> $key['nombreAula'],
 							  'dia'             => $key['diaNombre'],
 							  'inicio'       	=> $key['inicio'],
-							  'fin'          	=> $key['fin']);
+							  'fin'          	=> $key['fin'],
+							  'codigoMateria'   => $key['codigoMateria']);
 
 				array_push($docentes, $item);
 			}
@@ -35,7 +41,7 @@ class apiGetDocentesId {
 
 		}else{
 
-			$e = array('mensaje' => 'id no existe ');
+			$e = array('mensaje' => 'usuario no existe en la base de datos');
 			array_push($error, $e);
 			echo json_encode($error);
 		}
@@ -72,7 +78,7 @@ class apiGetDocentesId {
 
 		}else{
 
-			$e = array('mensaje' => 'no hay datos');
+			$e = array('mensaje' => 'usuario no existe en la base de datos');
 			array_push($error, $e);
 			echo json_encode($error);
 		}

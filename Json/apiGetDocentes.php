@@ -1,10 +1,44 @@
 <?php
+
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
+
 include 'Modelos/modelo.php';
 
 
 class apiDocentes{
+
+	function getUsers(){
+
+		$docente = new  Docentes();
+		$res = $docente->getUsers();
+		$users = array();
+		$error = array();
+
+		if ($res->rowCount()) {
+			
+			foreach ($res as $key ) {
+				
+				$item = array('id' 		  => $key['id'],
+							  'user'  	  => $key['username'],
+							  'password'  => $key['password'],
+							  'role'  	  => $key['role']);
+
+				array_push($users, $item);
+			}
+
+			echo json_encode($users);
+
+		}else{
+
+			$e = array('mensaje' => 'usuario no existe');
+			array_push($error, $e);
+			echo json_encode($error);
+		}
+
+
+
+	}
 
 
 	function getDocentes($pa){
@@ -12,6 +46,8 @@ class apiDocentes{
 		$docente = new  Docentes();
 		$res = $docente->getDocentes($pa);
 		$docentes = array();
+		$error = array();
+
 
 		if ($res->rowCount()) {
 			
@@ -31,7 +67,9 @@ class apiDocentes{
 
 		}else{
 
-			echo json_encode(array('mensaje'  => 'no hay elementos registrados'));
+			$e = array('mensaje' => 'usuario no existe');
+			array_push($error, $e);
+			print json_encode($error);
 		}
 
 	}
@@ -60,12 +98,10 @@ class apiDocentes{
 
 		}else{
 
-			$e = array('mensaje' => 'error');
+			$e = array('mensaje' => 'lapso_academico no existe');
 			array_push($error, $e);
 			echo json_encode($error);
 		}
-
-
 
 	}
 
@@ -96,6 +132,40 @@ class apiDocentes{
 
 		}else{
 
+			$e = array('mensaje' => 'usuario no existe en la base de datos');
+			array_push($error, $e);
+			echo json_encode($error);
+		}
+
+
+	}
+
+	function validarUserAdmin($dato1,$dato2){
+
+		$docente = new  Docentes();
+		$res = $docente->validarUserAdmin($dato1,$dato2);
+		
+		$user = array();
+		$error = array();
+
+		if ($res->rowCount()) {
+			
+			foreach ($res as $key ) {
+				
+				$item = array('valid'  =>    'true',
+					   		  'id' 	   =>    $key['id'],
+					   		  'user'   =>    $key['username'],
+					   		  'pass'   =>    $key['password'],
+					   		  'role'   =>    $key['role'] );
+
+				array_push($user, $item);
+			}
+
+			echo json_encode($user);
+
+
+		}else{
+
 			$e = array('mensaje' => 'usuario no existe');
 			array_push($error, $e);
 			echo json_encode($error);
@@ -104,6 +174,5 @@ class apiDocentes{
 
 	}
 
-
-
+	
 }
